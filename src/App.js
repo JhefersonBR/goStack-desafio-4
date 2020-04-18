@@ -27,14 +27,12 @@ export default function App() {
   async function handleLikeRepository(id) {
     try {
       const response = await api.post(`/repositories/${id}/like`);
-      repositories.map(repository => {
+      setRepositories(repositories.map(repository => {
         if (repository.id === id) {
           repository.likes = response.data.likes;
           return repository;
         }
-      });
-
-      setRepositories([...repositories]);
+      }));
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +42,7 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
       <SafeAreaView style={styles.container}>
-      
+
 
         <FlatList style={styles.conrepositoryContainertainer}
           data={repositories}
@@ -77,7 +75,7 @@ export default function App() {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => {handleLikeRepository(repository.id)}}
+                onPress={() => { handleLikeRepository(repository.id) }}
                 testID={`like-button-${repository.id}`}
               >
                 <Text style={styles.buttonText}>Curtir</Text>
